@@ -139,10 +139,17 @@ class TwitchCommandoClient extends EventEmitter {
     }
 
     this.logger.info('Autojoining ' + channels.length + ' channels');
+    
+    
+    let joinInterval = 300;
+    if (this.options.botType === CommandoConstants.BOT_TYPE_VERIFIED) {
+      joinInterval = 5;
+    }   
 
     this.tmi = new tmi.client({
       options: {
-        debug: this.verboseLogging
+        debug: this.verboseLogging,
+        joinInterval: joinInterval,
       },
       connection: {
         secure: true,
